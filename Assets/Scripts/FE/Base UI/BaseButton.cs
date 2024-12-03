@@ -15,6 +15,6 @@ public class BaseButton : MonoBehaviour
 
     protected virtual void OnButtonClick()
     {
-        
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.OpenUI);
     }
 }
