@@ -6,6 +6,8 @@ public class TargetStoryButton : BaseButton
 {
     protected override void OnButtonClick()
     {
+        base.OnButtonClick();
+
         UIManager.Instance.GetPanel(UIPanelType.InfoStory).Show();
     }
 }
