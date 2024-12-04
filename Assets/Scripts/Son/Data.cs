@@ -96,11 +96,6 @@ public class Data : MonoBehaviour
     public TextMeshProUGUI Character_Name;
     public Image Character_Image;
 
-    [Header("UIColor")]
-    public Image MiddleUI;
-    public Image TopAndBottomUI;
-    public Color DefaultColor;
-
     [Header("Buff")]
     public Transform buffParent;
     public GameObject buffObject;
@@ -149,6 +144,7 @@ public class Data : MonoBehaviour
     private BuffType buffType;//type of buff
     private Choice BuffChoice;//choice to create buff
     private bool canReviveWithBuff;//bool for revive with buff
+    public bool encounterBuff;
 
     //bool for Gameover
     [HideInInspector]    
@@ -183,6 +179,7 @@ public class Data : MonoBehaviour
         hasSpiritualityBuff = PlayerPrefs.GetInt(hasSpiritualityBuffKey, 0) == 1;
 
         //Create Buffs if they exist
+        encounterBuff=false;
         if (hasMilitaryBuff)
         {
             CreateBuff(new Choice { buffType = BuffType.military });
@@ -218,9 +215,6 @@ public class Data : MonoBehaviour
         {
             UnlockChoiceList(TestLockedChoice);
         }
-
-        //Set the current color for MiddleUI for logic purpose
-        DefaultColor = MiddleUI.color;
     }
 
     public void MakeDecision()
@@ -237,7 +231,7 @@ public class Data : MonoBehaviour
         }
         if (currentCharacter.isRevive)
         {
-            Revive();
+            DivideRevive();
             return;
         }
         if (currentCharacter.isDie)
@@ -370,19 +364,18 @@ public class Data : MonoBehaviour
     }
     #endregion
 
-    #region Revive Logic
-    private void Revive()//Logic for revive card
+    #region Divide Revive Logic
+    private void DivideRevive()//Logic for revive card
     {
         currentChoice = currentCharacter.choices[0];
         SetCardElements();
         GameManager.Instance.ResetElementStats();
-        MiddleUI.DOColor(DefaultColor, 1f);
         GameManager.Instance.isChecked = false;
         currentCharacter.isRevive = false;
         TabData.instance.EncounterStory(1);
     }
     
-    private void RevivePlayer()//calling from Kill Logic to set revive card
+    private void DivideRevivePlayer()//calling from Kill Logic to set revive card
     {
         currentCharacter = ReviveCard;
         TabData.instance.EncounterCharacter(currentCharacter.characterName);
@@ -402,7 +395,7 @@ public class Data : MonoBehaviour
         if (TabData.instance.canRevive)
         {
             SetCardElements();
-            RevivePlayer();
+            DivideRevivePlayer();
             TabData.instance.canRevive = false;
             return;
         }
@@ -414,7 +407,6 @@ public class Data : MonoBehaviour
     {
         currentCharacter = DieCard;
         currentChoice = choice;
-        MiddleUI.DOColor(TopAndBottomUI.color, 1f);
         TabData.instance.EncounterCharacter(currentCharacter.characterName);
     }
 
@@ -439,8 +431,7 @@ public class Data : MonoBehaviour
         AddBuff();
 
         GameObject newBuff = Instantiate(buffObject, buffParent);
-        //SetBuffSprite(Buff.buffType,newBuff);
-        SetBuffColor(Buff.buffType, newBuff);
+        SetBuffSprite(Buff.buffType,newBuff);
     }
 
     private void SetBuffSprite(BuffType buffType,GameObject Buff)//Set up sprite for buff object
@@ -478,48 +469,15 @@ public class Data : MonoBehaviour
         }
     }
 
-    private void SetBuffColor(BuffType buffType, GameObject Buff)//Set up color for buff object
-    {
-        switch (buffType)
-        {
-            case BuffType.military:
-                Buff.GetComponentInChildren<Image>().color = Color.red;
-                hasMilitaryBuff = true;
-                PlayerPrefs.SetInt(hasMilitaryBuffKey, 1);
-                LoadBuffDescription(0);
-                BuffTypes[0] = BuffType.military;
-                break;
-            case BuffType.economy:
-                Buff.GetComponentInChildren<Image>().color = Color.green;
-                hasEconomyBuff = true;
-                PlayerPrefs.SetInt(hasEconomyBuffKey, 1);
-                LoadBuffDescription(1);
-                BuffTypes[1] = BuffType.economy;
-                break;
-            case BuffType.publicEsteem:
-                Buff.GetComponentInChildren<Image>().color = Color.blue;
-                hasPublicEsteemBuff = true;
-                PlayerPrefs.SetInt(hasPublicEsteemBuffKey, 1);
-                LoadBuffDescription(2);
-                BuffTypes[2] = BuffType.publicEsteem;
-                break;
-            case BuffType.spirituality:
-                Buff.GetComponentInChildren<Image>().color = Color.yellow;
-                hasSpiritualityBuff = true;
-                PlayerPrefs.SetInt(hasSpiritualityBuffKey, 1);
-                LoadBuffDescription(3);
-                BuffTypes[3] = BuffType.spirituality;
-                break;
-
-        }
-    }
-
     public void CheckAndCreateBuff()//Calling from Card Script to check and create buff if agree
     {
+        Debug.Log("Check buff");
         if (BuffChoice != null)
         {
+            encounterBuff = true;
             CreateBuff(BuffChoice);
             BuffChoice = null;
+            Debug.Log("Buff created");
         }
     }
 
@@ -540,7 +498,6 @@ public class Data : MonoBehaviour
     private void ReviveWithBuff()//Logic for revive with buff card
     {
         SetCardElements();
-        MiddleUI.DOColor(DefaultColor, 1f);
         RemoveBuffObject(buffType);
         GameManager.Instance.isChecked = false;
         currentCharacter.isReviveWithBuff = false;
@@ -575,28 +532,28 @@ public class Data : MonoBehaviour
                 switch (buffType)
                 {
                     case BuffType.military:
-                        if (buffImage.color == Color.red)
+                        if (buffImage.sprite == militaryBuffSprite)
                         {
                             Destroy(child.gameObject);
                             return;
                         }
                         break;
                     case BuffType.economy:
-                        if (buffImage.color == Color.green)
+                        if (buffImage.sprite == economyBuffSprite)
                         {
                             Destroy(child.gameObject);
                             return;
                         }
                         break;
                     case BuffType.publicEsteem:
-                        if (buffImage.color == Color.blue)
+                        if (buffImage.sprite == publicEsteemBuffSprite)
                         {
                             Destroy(child.gameObject);
                             return;
                         }
                         break;
                     case BuffType.spirituality:
-                        if (buffImage.color == Color.yellow)
+                        if (buffImage.sprite=spiritualityBuffSprite)
                         {
                             Destroy(child.gameObject);
                             return;
@@ -617,9 +574,14 @@ public class Data : MonoBehaviour
 
     private void LoadBuffDescription(int i)//Calling from SetBuffSprite to load buff description card
     {
-        currentCharacter = BuffDescription;
-        currentChoice = currentCharacter.choices[i];
-        TabData.instance.EncounterCharacter(currentCharacter.characterName);
+        if (encounterBuff)
+        {
+            Debug.Log("Load Buff Description");
+            currentCharacter = BuffDescription;
+            currentChoice = currentCharacter.choices[i];
+            TabData.instance.EncounterCharacter(currentCharacter.characterName);
+            encounterBuff = false;
+        }
     }
     #endregion
 
