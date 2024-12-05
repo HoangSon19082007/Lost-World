@@ -53,7 +53,7 @@ public class LoadingScreen : MonoBehaviour
     {
         DOTween.To(() => startingYear, x => {
             startingYear = x;
-            currentYearText.text = $"Năm\n {startingYear} trước công nguyên";
+            currentYearText.text = $"Năm {startingYear}";
         }, toYear, 0.5f) 
         .SetEase(Ease.Linear);
     }
