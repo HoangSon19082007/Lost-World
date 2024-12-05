@@ -51,7 +51,6 @@ public class TabData : MonoBehaviour
     private Dictionary<int, StoryUIElement> storyDictionary;
     public Color currentTextColor;
     public Color ChangeTextColor;
-    public Slider storyProgressSlider;
 
     private void Start()
     {
@@ -227,7 +226,6 @@ public class TabData : MonoBehaviour
                 descriptionText.color = ChangeTextColor;
             }
         }
-        UpdateStoryProgress();
     }
 
     public void EncounterStory(int storyID)
@@ -246,24 +244,6 @@ public class TabData : MonoBehaviour
                 LoadEncounteredStory();
             }
         }
-    }
-
-    public void UpdateStoryProgress()
-    {
-        int encounteredCount = 0;
-
-        // Đếm số lượng cốt truyện đã gặp
-        foreach (var storyElement in storyUIElements)
-        {
-            if (storyElement.hasEncountered)
-            {
-                encounteredCount++;
-            }
-        }
-
-        // Cập nhật slider giá trị dựa trên phần trăm
-        float progress = (float)encounteredCount / storyUIElements.Length;
-        storyProgressSlider.value = progress;
     }
     #endregion
 }

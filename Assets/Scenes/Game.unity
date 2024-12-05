@@ -8602,9 +8602,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7cc38350495ea44b8e8945012a5a8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffParent: {fileID: 668740977}
   topAnswer: {fileID: 1097376181}
   bottomAnswer: {fileID: 454306875}
+  cardList: []
+  delayBetweenCards: 0.3
+  ListCard: {fileID: 0}
+  rulingDays: {fileID: 0}
 --- !u!114 &1015864716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10332,7 +10335,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 298.0198, y: 0}
+  m_AnchoredPosition: {x: 324.75952, y: 0}
   m_SizeDelta: {x: 50.21, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1222312251
@@ -11759,7 +11762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1428347507
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12801,7 +12804,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 178.81187, y: 0}
+  m_AnchoredPosition: {x: 194.85571, y: 0}
   m_SizeDelta: {x: 50.21, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1525360156
@@ -13423,7 +13426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 59.60396, y: 0}
+  m_AnchoredPosition: {x: 64.951904, y: 0}
   m_SizeDelta: {x: 50.21, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1618674670
@@ -16771,8 +16774,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b210576d26c89245a972a11a6cee700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 1
-  amountOfBuff: 0
+  StartingTime: 1000
+  rulingYears: 0
+  rulingDays: 0
+  currentYears: 0
+  currentDays: 0
+  publicEsteem: 0
+  militaryPower: 0
+  economy: 0
+  spirituality: 0
+  maxStat: 0
+  isChecked: 0
 --- !u!4 &1950156166
 Transform:
   m_ObjectHideFlags: 0
@@ -18068,7 +18080,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 417.22772, y: 0}
+  m_AnchoredPosition: {x: 454.66333, y: 0}
   m_SizeDelta: {x: 50.21, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2061131488
