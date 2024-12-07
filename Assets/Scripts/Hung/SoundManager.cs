@@ -39,6 +39,8 @@ public class SoundManager : MonoBehaviour
     public Slider sfxSlider;
     public Toggle backgroundMusicMuteToggle;
     public Toggle sfxMuteToggle;
+    public GameObject backgroundMusicCheckMark;
+    public GameObject sfxCheckMark;
 
     private bool isBackgroundMusicMuted = false;
     private bool isSfxMuted = false;
@@ -69,7 +71,7 @@ public class SoundManager : MonoBehaviour
 
         if (backgroundMusicSlider != null)
         {
-            backgroundMusicSlider.value = backgroundMusicVolume*2;
+            backgroundMusicSlider.value = backgroundMusicVolume;
             backgroundMusicSlider.onValueChanged.AddListener(SetBackgroundMusicVolume);
         }
         if (sfxSlider != null)
@@ -82,12 +84,14 @@ public class SoundManager : MonoBehaviour
         {
             backgroundMusicMuteToggle.isOn = !isBackgroundMusicMuted;
             backgroundMusicSource.mute = isBackgroundMusicMuted;
+            backgroundMusicCheckMark.SetActive(isBackgroundMusicMuted);
             backgroundMusicMuteToggle.onValueChanged.AddListener((_) => ToggleBackgroundMusicMute());
         }
         if (sfxMuteToggle != null)
         {
             sfxMuteToggle.isOn = !isSfxMuted;
             sfxSource.mute = isSfxMuted;
+            sfxCheckMark.SetActive(isSfxMuted);
             sfxMuteToggle.onValueChanged.AddListener((_) => ToggleSFXMute());
         }
 
@@ -138,7 +142,7 @@ public class SoundManager : MonoBehaviour
 
         if (Mathf.Abs(volume - lastBackgroundMusicVolume) >= volumeChangeThreshold)
         {
-            backgroundMusicVolume = volume * 0.5f;
+            backgroundMusicVolume = volume;
             backgroundMusicSource.volume = backgroundMusicVolume;
             lastBackgroundMusicVolume = volume;
         }
@@ -169,18 +173,20 @@ public class SoundManager : MonoBehaviour
     {
         isBackgroundMusicMuted = !isBackgroundMusicMuted;
         backgroundMusicSource.mute = isBackgroundMusicMuted;
+        backgroundMusicCheckMark.SetActive(isBackgroundMusicMuted);
     }
 
     public void ToggleSFXMute()
     {
         isSfxMuted = !isSfxMuted;
         sfxSource.mute = isSfxMuted;
+        sfxCheckMark.SetActive(isSfxMuted);
     }
 
     private void LoadPreferences()
     {
         // Load background music volume (chia 10 để đưa về giá trị float)
-        backgroundMusicVolume = PlayerPrefs.GetInt(BG_MUSIC_VOLUME_KEY, 5) / 10f;
+        backgroundMusicVolume = PlayerPrefs.GetInt(BG_MUSIC_VOLUME_KEY, 10) / 10f;
 
         // Load SFX volume (chia 10 để đưa về giá trị float)
         sfxVolume = PlayerPrefs.GetInt(SFX_VOLUME_KEY, 10) / 10f;
