@@ -110,19 +110,7 @@ public class TabData : MonoBehaviour
                 // Add a listener to the button to handle the purchase when clicked
                 int index = i;//save the i value from current loop
                 itemButtons[i].onClick.AddListener(() => PurchaseItem(index));
-                SetButtonName(itemButtons[i], itemKeys[i]);
             }
-        }
-    }
-
-    //function to set the button name
-    void SetButtonName(Button button, string buttonName)
-    {
-        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
-
-        if (buttonText != null)
-        {
-            buttonText.text = buttonName;
         }
     }
 
