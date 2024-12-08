@@ -121,6 +121,15 @@ public class TabData : MonoBehaviour
         // Mark the item as purchased in PlayerPrefs
         PlayerPrefs.SetInt(itemKeys[itemIndex], 1);
         PlayerPrefs.Save();
+        //Set bool value for each item
+        if (itemIndex == 0)
+        {
+            canRevive = true;
+        }
+        else if (itemIndex == 1)
+        {
+            seeTheFuture = true;
+        }
 
         DisableButton(itemButtons[itemIndex]);
     }
@@ -133,7 +142,7 @@ public class TabData : MonoBehaviour
         TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
         if (buttonText != null)
         {
-            buttonText.text = "Purchased";
+            buttonText.text = "Đã mua";
         }
     }
     #endregion
