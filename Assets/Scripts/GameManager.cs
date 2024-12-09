@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
             isChecked = false;
         currentYears = PlayerPrefs.GetInt(PlayerPrefsYearKey, StartingTime);
-        currentDays = PlayerPrefs.GetInt(PlayerPrefsDayKey);
+        currentDays = PlayerPrefs.GetInt(PlayerPrefsDayKey,0);
 
         rulingDays = Random.Range(11, 51);
         rulingYears = 0;
@@ -162,6 +162,9 @@ public class GameManager : MonoBehaviour
 
     private void UpdateCurrentDaysAndYears()
     {
+        if (TabData.instance.canRevive)
+            return;
+
         currentDays = currentDays + rulingDays - (rulingYears * 365);
         currentYears += rulingYears;
     }

@@ -6772,6 +6772,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7965374183370995728, guid: d3f6517d8b13b3f4896d3ed761646406, type: 3}
+      propertyPath: intro.choices.Array.data[1].rulingDays1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965374183370995728, guid: d3f6517d8b13b3f4896d3ed761646406, type: 3}
+      propertyPath: intro.choices.Array.data[2].rulingDays1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965374183370995728, guid: d3f6517d8b13b3f4896d3ed761646406, type: 3}
+      propertyPath: intro.choices.Array.data[3].rulingDays1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965374183370995728, guid: d3f6517d8b13b3f4896d3ed761646406, type: 3}
+      propertyPath: intro.choices.Array.data[4].rulingDays1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965374183370995728, guid: d3f6517d8b13b3f4896d3ed761646406, type: 3}
       propertyPath: intro.choices.Array.data[0].publicEsteem1
       value: 0
       objectReference: {fileID: 0}
